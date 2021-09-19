@@ -10,10 +10,38 @@ class Main extends Component {
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '500px' }}>
             <div className="content mr-auto ml-auto">
               <p>&nbsp;</p>
-              <h1 className="d-4">Edit this file in App.js!</h1>
-                
-                {/* Code ... */}
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                const firstName = this.firstName.value;
+                const lastName = this.lastName.value;
+                this.props.createProfile(firstName, lastName);
+                console.log(firstName, lastName, 'Profile Names');
 
+              }} action="">
+                <div className={'form-group mr-sm-2'}>
+                  <label className={'mr-2'} htmlFor="First Name" >First Name: </label>
+                  <input type="text"
+                         id={'firstName'}
+                         name={'First Name'}
+                         ref={(input => {this.firstName = input})}
+                         placeholder={'First Name...'}
+                         className={'form-control'}
+                  />
+                </div>
+                <div className={'form-group mr-sm-2'}>
+                  <label className={'mr-2'} htmlFor="Last Name" >Last Name: </label>
+                  <input type="text"
+                         name={'Last Name'}
+                         id={'lastName'}
+                         ref={(input => {this.lastName = input})}
+                         placeholder={'Last Name...'}
+                         className={'form-control'}
+                  />
+                </div>
+
+                <button className={'btn btn-primary'}>Create Profile</button>
+
+              </form>
               <p>&nbsp;</p>
                 
                 {/* Code ... */}
