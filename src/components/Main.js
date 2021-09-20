@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Identicon from 'identicon.js';
+
 
 class Main extends Component {
 
@@ -14,9 +14,11 @@ class Main extends Component {
                 e.preventDefault();
                 const firstName = this.firstName.value;
                 const lastName = this.lastName.value;
-                this.props.createProfile(firstName, lastName);
-                console.log(firstName, lastName, 'Profile Names');
-
+                if (!firstName || !lastName) {
+                  alert('Please enter a valid name.')
+                } else {
+                  this.props.createProfile(firstName, lastName);
+                }
               }} action="">
                 <div className={'form-group mr-sm-2'}>
                   <label className={'mr-2'} htmlFor="First Name" >First Name: </label>
@@ -38,14 +40,9 @@ class Main extends Component {
                          className={'form-control'}
                   />
                 </div>
-
                 <button className={'btn btn-primary'}>Create Profile</button>
-
               </form>
               <p>&nbsp;</p>
-                
-                {/* Code ... */}
-
             </div>
           </main>
         </div>

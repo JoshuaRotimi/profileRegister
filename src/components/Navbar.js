@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Identicon from 'identicon.js';
-import photo from '../photo.png'
 
 class Navbar extends Component {
 
@@ -25,9 +24,10 @@ class Navbar extends Component {
                 className='ml-2'
                 width='30'
                 height='30'
+                alt={'barcode'}
                 src={`data:image/png;base64,${new Identicon(this.props.account, 30).toString()}`}
               />
-              : <span></span>
+              : <span/>
             }
           </li>
         </ul>

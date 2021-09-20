@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
-import Identicon from 'identicon.js';
 import './App.css';
 import Register from '../abis/Register'
 import Navbar from './Navbar'
@@ -36,10 +35,6 @@ class App extends Component {
     if (networkData) {
       const register = web3.eth.Contract(Register.abi, networkData.address);
       this.setState({ profiles: register});
-      const profileId = await register.methods.profileId().call();
-      this.setState({profileId});
-      console.log(profileId);
-
       this.setState({loading: false});
 
     } else {
@@ -48,21 +43,25 @@ class App extends Component {
   };
 
   createProfile = (firstName, lastName) => {
-    console.log('Submitting Document');
-
     this.setState({loading: true});
     this.state.profiles.methods.createProfile(firstName, lastName).send({from: this.state.account, value: 10000000000000000})
-        .then(res => console.log(res, 'Success')).catch(err => console.log(err, 'Error'));
+        .then(receipt => {
+          console.log(receipt, "Success");
+          alert('Profile was added successfully')
+        }).catch(err => {
+      console.log(err.message, 'Error');
+      if (err) {
+        alert('Error. Profile was not added! Please check if profile already exists')
+      }
+    });
     this.setState({loading: false});
 };
 
   getProfile = async (id) => {
     this.setState({loading: true});
     const profileDetails = await this.state.profiles.methods.getProfile(id).call();
-    this.setState({loading: false});
     this.setState({profileDetails});
-    console.log(profileDetails);
-
+    this.setState({loading: false});
   };
 
 
@@ -93,7 +92,7 @@ class App extends Component {
                 <h3>Profile Details</h3>
                 <h3>First Name: {this.state.profileDetails[0]}</h3>
                 <h3>Last Name: {this.state.profileDetails[1]}</h3>
-                <h3>ID: {this.state.profileDetails[2]._hex}</h3>
+                <h3>ID: {this.state.profileDetails[2].toString()}</h3>
              </div>
           }
         </div>
