@@ -34,6 +34,7 @@ class App extends Component {
     const networkData = Register.networks[networkId];
     if (networkData) {
       const register = web3.eth.Contract(Register.abi, networkData.address);
+      console.log(register);
       this.setState({ profiles: register});
       this.setState({loading: false});
 
